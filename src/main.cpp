@@ -13,6 +13,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
+    int status = 0;
     for(int i = 1; i < argc; i++) {
         try {
             string arg(argv[i]);
@@ -23,17 +24,13 @@ int main(int argc, char* argv[]) {
 
                 string cmd("name-generator "+race+" "+gender);
 
-                int status = system(cmd.c_str());
+                status = system(cmd.c_str());
 
                 exit(status);
             } else if(arg == "-v" || arg == "--verbose") {
-                fprintf(stdout,"OpenRPG version %d.%d.%d-%s\n",
-                        OpenRPG_VERSION_MAJOR,
-                        OpenRPG_VERSION_MINOR,
-                        OpenRPG_VERSION_TWEAK,
-                        OpenRPG_VERSION_SUFFIX);
+                fprintf(stdout,"OpenRPG version %s\n", PACKAGE_STRING);
 
-                int status = 0;
+                status = 0;
 
                 exit(status);
             }
@@ -41,7 +38,7 @@ int main(int argc, char* argv[]) {
             cerr << "invalid arg/use print" << endl;
         }
 
-        exit(0);
+        exit(status);
     }
 
     print_file("banners/welcome_mat1");
@@ -53,5 +50,5 @@ int main(int argc, char* argv[]) {
         cin >> in;
     }
 
-	return 0;
+	return status;
 }
